@@ -22,6 +22,7 @@ public class FromRunnable {
             }
         };
 
+        // Lambdas can only be created for SAM (single abstract method) interfaces
         Runnable runnableFromLambda = () -> {
             System.out.println("Implementing Runnable from lambda. Printing Inside : " + Thread.currentThread().getName());
             process();
