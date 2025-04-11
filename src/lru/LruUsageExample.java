@@ -1,9 +1,9 @@
 package lru;
 
-public class Example {
+public class LruUsageExample {
     LRU lru;
 
-    public Example(){
+    public LruUsageExample(){
         this.lru = LRU.getInstance();
     }
 
@@ -16,10 +16,10 @@ public class Example {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        Example example = new Example();
-        Example example1 = new Example();
-        Example example2 = new Example();
-        Example example3 = new Example();
+        LruUsageExample example = new LruUsageExample();
+        LruUsageExample example1 = new LruUsageExample();
+        LruUsageExample example2 = new LruUsageExample();
+        LruUsageExample example3 = new LruUsageExample();
 
         Thread thread1 = new Thread(() -> {
             example1.put("name", "nikhil");
