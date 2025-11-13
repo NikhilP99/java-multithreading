@@ -14,7 +14,7 @@ public class CallableExample {
         System.out.println("Creating Callable");
         Callable<String> callableFromImplementingAnInterface = new CallableExample.ExampleCallable();
 
-        Callable<String> callableFromAnonClass = new Callable<>() {
+        Callable<String> callableFromAnonClass = new Callable<String>() {
             @Override
             public String call() throws InterruptedException {
                 System.out.println("Implementing Callable from anon class. Printing Inside : " + Thread.currentThread().getName());

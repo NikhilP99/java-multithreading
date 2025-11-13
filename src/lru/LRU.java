@@ -34,9 +34,7 @@ public class LRU extends LinkedHashMap <String, String> {
     @Override
     public synchronized String put(String key, String value) {
         System.out.println("Putting " + value + " key from thread " + Thread.currentThread().getName());
-        if(this.containsKey(key)){
-            this.remove(key);
-        }
+        this.remove(key);
         super.put(key, value);
         return value;
     }

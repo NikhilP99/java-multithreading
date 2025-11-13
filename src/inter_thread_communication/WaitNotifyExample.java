@@ -55,6 +55,7 @@ public class WaitNotifyExample {
             for(int i=0;i<10;i++) {
                 try {
                     example.produce(i);
+                    Thread.sleep(200);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -65,6 +66,7 @@ public class WaitNotifyExample {
             for(int i=0;i<10;i++) {
                 try {
                     example.consume();
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

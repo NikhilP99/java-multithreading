@@ -19,13 +19,15 @@ public class ConditionLockExample {
     private Queue<Integer> queue;
     private final Integer capacity;
     private final Lock lock;
-    private final Condition condition;
+    private final Condition producerCondition; // wait set for producers
+    private final Condition consumerCondition; // wait set for consumers
 
     public ConditionLockExample(Integer capacity){
         this.capacity = capacity;
         this.queue = new LinkedList<>();
         this.lock = new ReentrantLock();
-        this.condition = this.lock.newCondition();
+        this.producerCondition = this.lock.newCondition();
+        this.consumerCondition = this.lock.newCondition();
     }
 
     private void produce(Integer num) throws InterruptedException {
@@ -34,14 +36,14 @@ public class ConditionLockExample {
         try {
             // Always check await condition in a loop in case any thread wakes up without notify
             while(this.queue.size() >= capacity){
-                condition.await();
+                producerCondition.await();
             }
 
             queue.add(num);
             System.out.println("Produced " + num + " from thread " + Thread.currentThread().getName());
 
             // Notify other waiting threads
-            condition.signalAll(); // when in doubt, signalAll() instead of signal()
+            consumerCondition.signalAll(); // when in doubt, signalAll() instead of signal()
 
             // This function does not release lock immediately after signal
         } finally {
@@ -57,14 +59,14 @@ public class ConditionLockExample {
         try {
             // Always check await condition in a loop in case any thread wakes up without notify
             while(this.queue.isEmpty()){
-                condition.await();
+                consumerCondition.await();
             }
 
             Integer consumed = queue.poll();
             System.out.println("Consumed " + consumed + " from thread " + Thread.currentThread().getName());
 
             // Notify other waiting threads
-            condition.signalAll(); // when in doubt, signalAll() instead of signal()
+            producerCondition.signalAll(); // when in doubt, signalAll() instead of signal()
 
             // This function does not release lock immediately after signal
         } finally {

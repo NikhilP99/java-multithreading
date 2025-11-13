@@ -37,11 +37,12 @@ class ReentrantLockExample {
             count = count + 1;
         } finally {
             System.out.println("Releasing Reentrant lock from thread : " + Thread.currentThread().getName());
+            lock.unlock();
         }
     }
 
     // More fine-grained control of locks
-    public int incrementAndGet(){
+    public int incrementAndGet(){ 
         System.out.println("Is it locked : " + lock.isLocked());
 
         System.out.println("Is lock held by current thread : " + lock.isHeldByCurrentThread());
@@ -68,7 +69,7 @@ class ReentrantLockExample {
 
 /*
 * ReadWriteLock allows for an increased level of concurrency. It performs better compared to other locks in applications where there are fewer writes than reads.
-* he read lock may be held by multiple threads simultaneously as long as the write lock is not held by any thread
+* The read lock may be held by multiple threads simultaneously as long as the write lock is not held by any thread
 * */
 class ReadWriteCounter {
     private final ReadWriteLock lock = new ReentrantReadWriteLock();

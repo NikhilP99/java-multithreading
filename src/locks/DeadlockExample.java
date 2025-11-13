@@ -1,5 +1,11 @@
 package locks;
 
+/*
+* To avoid deadlocks:
+* use tryLock with timeout
+* avoid nested locks - acquiring a lock while holding another lock
+* leverage concurrent data structures from java.util.concurrent package
+* */
 public class DeadlockExample {
 
     public static void main(String[] args) throws InterruptedException {

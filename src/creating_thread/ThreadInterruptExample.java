@@ -16,8 +16,24 @@ public class ThreadInterruptExample {
         Thread.sleep(2000);
         thread.interrupt();
 
-        // TODO: Finish interrupted example
-        // https://www.javaguides.net/2018/09/java-thread-interrupt-example.html
+        Runnable workingUntilInterrupted = () -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                System.out.println("Thread is running: " + Thread.currentThread().getName());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Thread: " + Thread.currentThread().getName() + " got interrupted during sleep!");
+                    System.out.println("Is interrupted: " + Thread.currentThread().isInterrupted());
+                    Thread.currentThread().interrupt(); // Re-interrupt the thread
+                }
+            }
+            System.out.println("Thread is exiting: " + Thread.currentThread().getName());
+        };
+
+        Thread newThread = new Thread(workingUntilInterrupted, "workingUntilInterrupted");
+        newThread.start();
+        Thread.sleep(3000);
+        newThread.interrupt();
 
     }
 
